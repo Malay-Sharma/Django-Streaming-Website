@@ -6,8 +6,8 @@
         <div class="collapse navbar-collapse" id="mynavbar" style="display: flex; align-items: baseline; justify-content: space-between; padding-left: 60px; padding-right: 80px; ">
             <a class="col-md-1" href="{% url 'home' %}"><img src="{% static 'images\Watch\image1.png' %}" alt="" style="height: 80px; width: 80px; padding: 10px; border-radius: 40px;"></a>
             <ul class="navbar-nav m-0 col-md-4" style="font-size: x-large; font-weight: bold; justify-content: space-between;">
-                <li class="menu-item"><a href="#" class="active">Home</a></li>
-                <li class="menu-item"><a href="#">Listing</a></li>
+                <li class="menu-item"><a href="{% url 'home' %}" class="active">Home</a></li>
+                <li class="menu-item"><a href="{% url 'listing' %}">Listing</a></li>
                 <li class="has-children">
                     <a href="javascript:void(0);">Detail</a>
                     <ul class="submenu" style="display: none;">

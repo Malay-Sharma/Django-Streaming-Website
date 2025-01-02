@@ -1,6 +1,6 @@
 
 {% load static %}
-<!DOCTYPE html data-mdb-theme="dark">
+<!DOCTYPE >
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
@@ -21,7 +21,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.min.css"
 rel="stylesheet"
 />
 <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Front_End/styles.css' %}">
   <!-- Owl Carousel CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
@@ -30,6 +30,7 @@ rel="stylesheet"
 
     <title>Document</title>
 	<style>
+
     body{
       margin: 0;
       padding: 0;
@@ -88,6 +89,24 @@ rel="stylesheet"
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
     <script>
 
+  
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const mainContent = document.getElementById("main-content");
+  
+    if (sidebar.style.transform === "translateX(0px)") {
+      // Close sidebar
+      sidebar.style.transform = "translateX(-200px)";
+      mainContent.style.marginLeft = "50px"; // Reset margin
+
+    } else {
+      // Open sidebar
+      sidebar.style.transform = "translateX(0px)";
+      mainContent.style.marginLeft = "250px"; // Adjust margin to match sidebar width
+
+    }
+  }
+  
    
 var owl = $("#SLIDER-0")
       owl.owlCarousel({
