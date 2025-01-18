@@ -1,0 +1,63 @@
+{% extends 'structure/AuthPageStructure.html'%}
+
+{% block content %}
+{% load static %}
+<div style="background-color: rgba(35, 82, 213, 0.1); height: 30vh; align-content: center; justify-items: center;">
+<h1 style="font-size: 48px;"><b>WATCH-HOUR</b></h1>
+</div>
+<br><br>
+<center>
+<h3>LOG IN TO YOUR ACCOUNT</h3>
+</center>
+<center>
+    {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+</center>
+
+    <form class="row g-3" method="POST" action="{% url 'login' %}" >
+    {% csrf_token %}
+        <center>
+        <div class="col-md-4">
+          <div class="input-group form-outline" data-mdb-input-init>
+            <span class="input-group-text">@</span>
+            <input type="text" class="form-control" name="username" aria-describedby="inputGroupPrepend" required />
+            <label  class="form-label" >Username</label>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="col-md-4">
+            <div class="input-group form-outline" data-mdb-input-init>
+              <span class="input-group-text">@</span>
+              <input type="passwoed" class="form-control" name="password" aria-describedby="inputGroupPrepend" required />
+              <label  class="form-label" >Password</label>
+            </div>
+          </div>
+
+          <br>
+        
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-link btn-sm" style="border: 1px solid rgb(35, 82, 213); border-radius: 5px; width: 100%;">LOGIN</button>
+        </div>
+
+        <div class="col-md-4 text-center" style="margin-top: 30px;">
+          <div class="text-truncate">---------------------------------------------or---------------------------------------------</div>
+          <p>Not a member? <a href="#" >Register</a></p>
+        </div>
+
+        <a href="#">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-link btn-sm" style="border: 1px solid rgb(35, 82, 213); border-radius: 5px; width: 100%;">REGISTER</button>
+        </div>
+        </a>
+        </center>
+      </form>
+
+
+
+
+{% endblock %}

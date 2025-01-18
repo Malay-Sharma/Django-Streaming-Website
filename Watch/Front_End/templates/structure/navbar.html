@@ -7,7 +7,7 @@
             <a class="col-md-1" href="{% url 'home' %}"><img src="{% static 'images\Watch\image1.png' %}" alt="" style="height: 80px; width: 80px; padding: 10px; border-radius: 40px;"></a>
             <ul class="navbar-nav m-0 col-md-4" style="font-size: x-large; font-weight: bold; justify-content: space-between;">
                 <li class="menu-item"><a href="{% url 'home' %}" class="active">Home</a></li>
-                <li class="menu-item"><a href="{% url 'listing' %}">Listing</a></li>
+                <li class="menu-item"><a href="#">Listing</a></li>
                 <li class="has-children">
                     <a href="javascript:void(0);">Detail</a>
                     <ul class="submenu" style="display: none;">
@@ -50,11 +50,25 @@
                             </div>
                         </a>
                     </li>
-                    <li class="has-children ">
-                        <a href="#"><img src="{% static 'images\Watch\image1.png' %}" alt="" style="height: 60px; width: 60px; padding: 10px; border-radius: 40px;"></a>
-                        <ul class="submenu" style="display: none;">
+                    <li class="has-children">
+                        <a href="#">
+                            <img src="{% static 'images/Watch/image1.png' %}" alt="" 
+                                 style="height: 60px; width: 60px; padding: 10px; border-radius: 40px;">
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="{% url 'd_home' %}">Dashboard</a></li>
                             <li><a href="#">Sign up</a></li>
-                            <li><a href="#">Login</a></li>
+                            <li><a href="#">Profile</a></li>
+
+                            
+                            <li><a href="#">Cart</a></li>
+                            <li><a href="#">History</a></li>
+                            
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'logout' %}">LogOut</a></li>
+                            {% else %}
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                 </ul>
