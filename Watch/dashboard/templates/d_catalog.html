@@ -2,8 +2,60 @@
 
 
 {% block content %}
+<b><h1>catalog</h1></b>
+<hr>
 
-<h1>catalog</h1>
+{% for a in anime%}
+<div style="display: flex; border: 1px solid rgb(35, 82, 213); margin-top: 15px; border-radius: 10px; height: 70px; align-items: baseline; justify-content: space-around; padding: 10px; padding-top: 16px; background-color: rgba(35, 82, 213, 0.1);">
+  <div class="w-25">                
+      <p>{{ a.pk }}</p>
+  </div>
+  <div style="text-align: left; gap: 10px;">
+          <p>{{ a.title }}</p>
+  </div>
+
+  <div>
+    {% if a.season_number %}
+        <p>{{ a.type }}{{ a.season_number }}</p>
+    {% else %}
+        <p>{{ a.type }}</p>
+    {% endif %}
+</div>
+
+  <div>
+    <p>{{ a.genreOne }}</p>
+  </div>
+
+  <div>
+        {% if a.premium_only %}
+            <p>Premiere</p>
+        {% else %}
+            <p>. . Free . .</p>
+        {% endif %}
+</div>
+
+  <div>
+    <p>{{ a.release_date }}</p>
+  </div>
+
+  <div >
+      <div>
+          <button type="button" class="btn btn-link btn-sm" style="border: 1px solid rgb(255, 255, 255); border-radius: 5px; height: 30px; width: 30px; background-color: #c5c107; ">
+            <i class="ri-search-eye-line"></i>
+          </button>
+          <button type="button" class="btn btn-link btn-sm" style="border: 1px solid rgb(255, 255, 255); border-radius: 5px; height: 30px; width: 30px; background-color: #03570b; ">
+            <i class="ri-pencil-line"></i>
+          </button>
+          <button type="button" class="btn btn-link btn-sm" style="border: 1px solid rgb(255, 255, 255); border-radius: 5px; height: 30px; width: 30px; background-color: #a50303;">
+            <i class="ri-delete-bin-6-line"></i>
+          </button>
+      </div>
+  </div>
+
+</div>
+{% endfor %}
+
+
 
 {% endblock %}
 

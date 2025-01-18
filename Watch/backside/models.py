@@ -64,47 +64,48 @@ class Subscription(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.plan.name.capitalize()}"
 
-
-# Series model
 class Series(models.Model):
-    title = models.CharField(max_length=255)
-    genre1 = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='series_g1')
-    genre2 = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='series_g2')
-    description = models.TextField()
-    release_date = models.DateField()
-    poster = models.ImageField(upload_to='series_posters/', null=True, blank=True)
-    premium_only = models.BooleanField(default=False)  # Only accessible to premium users
-
-    def __str__(self):
-        return self.title
-
-# Season model
-class Season(models.Model):
     MOVIE = 'movie'
     SEASON = 'season'
     TYPE_CHOICES = [
         (MOVIE, 'Movie'),
         (SEASON, 'Season'),
     ]
-    series = models.ForeignKey(Series, on_delete=models.CASCADE, related_name='seasons')
-    season_number = models.PositiveIntegerField()
-    type = models.CharField(max_length=10, choices=TYPE_CHOICES, default=SEASON)  # New field
+    title = models.CharField(max_length=255)
+    genreOne = models.ForeignKey('Category', related_name='series1', on_delete=models.CASCADE, blank=True, default='action')
+    genreTwo = models.ForeignKey('Category', related_name='series2', on_delete=models.CASCADE, blank=True, default='action')
+    genreThree = models.ForeignKey('Category', related_name='series3', on_delete=models.CASCADE, blank=True, default='action')
+    description = models.TextField()
+    release_date = models.DateField()
+    poster = models.ImageField(upload_to='series_posters/', null=True, blank=True)
+    type = models.CharField(max_length=10, choices=TYPE_CHOICES, default=SEASON)  # Movie or Season
+    season_number = models.PositiveIntegerField(null=True, blank=True)  # Only relevant for seasons
+    premium_only = models.BooleanField(default=False)  # Accessible to premium users only
 
     def save(self, *args, **kwargs):
-        # Automatically assign a season_number within the series
-        if not self.pk:  # Only assign on creation
-            max_season_number = Season.objects.filter(series=self.series).aggregate(Max('season_number'))['season_number__max']
+        # Automatically assign a season number for seasons
+        if self.type == self.SEASON and not self.pk:  # New season entry
+            max_season_number = Series.objects.filter(
+                type=self.SEASON
+            ).aggregate(Max('season_number'))['season_number__max']
             self.season_number = 1 if max_season_number is None else max_season_number + 1
+
+        # Ensure movies do not have a season number
+        if self.type == self.MOVIE:
+            self.season_number = None
+
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.series.title} - {self.type.capitalize()} {self.season_number if self.type == 'season' else ''}"
-
+        if self.type == self.MOVIE:
+            return f"{self.title} (Movie)"
+        return f"{self.title} - Season {self.season_number}"
+    
 # Episode model
 class Episode(models.Model):
-    season = models.ForeignKey("Season", on_delete=models.CASCADE, related_name='episodes')
-    title = models.CharField(max_length=255)
+    season = models.ForeignKey("Series", on_delete=models.CASCADE, related_name='episodes')
     episode_number = models.PositiveIntegerField(editable=False)  # Automatically assigned
+    sub_title = models.CharField(max_length=255)
     release_date = models.DateField()
     videos = models.FileField(null=True, blank=True, upload_to="anime_video/")  # Video file upload path
     duration_minutes = models.PositiveIntegerField(editable=False, null=True, blank=True)  # Auto-extracted
@@ -122,4 +123,4 @@ class Episode(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.season.series.title} - S{self.season.season_number}E{self.episode_number}: {self.title}"
+        return f"{self.season.title} - S{self.season.season_number}E{self.episode_number}: {self.sub_title}"

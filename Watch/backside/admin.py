@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from .models import Category, Subscription, Series, Season, Episode, Plan
+from .models import Category, Subscription, Series, Episode, Plan
 
 # Register your models here.
 
@@ -20,20 +20,15 @@ class SubscriptionAdmin(admin.ModelAdmin):
 admin.site.register(Subscription, SubscriptionAdmin)
 
 class SeriesAdmin(admin.ModelAdmin):
-    list_display = ['title', 'release_date', 'premium_only']
+    list_display = ['title', 'type', 'season_number', 'premium_only']
+    readonly_fields = ['season_number']
     class Meta:
         model = Series
 admin.site.register(Series, SeriesAdmin)
 
-class SeasonAdmin(admin.ModelAdmin):
-    list_display = ['series', 'season_number', 'type']
-    readonly_fields = ['season_number']
-    class Meta:
-        model = Season
-admin.site.register(Season, SeasonAdmin)
 
 class EpisodeAdmin(admin.ModelAdmin):
-    list_display = ['season', 'title', 'episode_number', 'release_date']
+    list_display = ['season', 'episode_number', 'sub_title', 'release_date']
     readonly_fields = ['episode_number']
     class Meta:
         model = Episode
