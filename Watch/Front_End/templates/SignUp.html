@@ -1,0 +1,40 @@
+{% extends 'structure/AuthPageStructure.html'%}
+
+{% block content %}
+{% load static %}
+
+<br><br>
+<center>
+<h3>CREATE A NEW ACCOUNT</h3>
+</center>
+<div style="position: relative;">
+    <form class="row g-3" method="POST" action="{% url 'register' %}" >
+    {% csrf_token %}
+        <center>
+        {{ form.as_p }}
+        <br>
+        <div class="col-md-4file">
+          <button type="submit" class="btn btn-link btn-sm" style="border-style: solid; border-width: 1px; border-radius: 5px; width: 100%;">REGISTER</button>
+        </div>
+        </center>
+        <center>
+        <div class="col-md-4 text-center" style="margin-top: 30px;">
+          <div class="text-truncate">---------------------------------------------or---------------------------------------------</div>
+          <p>Already a member? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+
+        <a href="{% url 'login' %}">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-link btn-sm" style="border-style: solid; border-width: 1px; border-radius: 5px; width: 100%;">LOGIN</button>
+        </div>
+        </a>
+      </center>
+
+
+      </form>
+      
+
+</div>
+
+
+{% endblock %}
